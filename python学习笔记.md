@@ -4,6 +4,23 @@ PYTHON 学习笔记
 
 # python 基础操作
 
+## python 列表生成器
+
+List Comprehensions
+
+```python
+>>> ['a' for i in range(4) if i % 2==0]
+['a', 'a']
+```
+
+### 行列转换
+
+```python
+[[row[col] for row in matrix] for col in range(len(matrix[0]))]
+```
+
+
+
 ## python 文件读取
 
 打开一个文件
