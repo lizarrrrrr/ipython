@@ -144,3 +144,31 @@ class Metaclass(type):
        #super(子类，某个class的mro).父类的方法
 ```
 
+# python 虚拟环境
+
+```shell
+$mkdir ~/.venvs
+$virtualenv --system-site-packages ~/.venvs/lpthw 
+$. ~/venvs/lpthw/bin/activate
+$(lpthw)
+```
+
+首先创建一个文件夹储存所有的虚拟环境
+执行`virtualenv`让它包括系统站点，并在lpthw中创建一个虚拟环境
+最后，通过souce命令激活
+
+# python项目骨架
+
+通常包含 bin NAME tests docs 四个文件夹
+
+```shell
+.
+├── NAME
+│   └── __init__.py
+├── bin
+├── docs
+├── setup.py
+└── tests
+    └── __init__.py
+```
+
