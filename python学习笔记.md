@@ -172,3 +172,141 @@ $(lpthw)
     └── __init__.py
 ```
 
+# python 爬虫
+
+## requests
+
+基本操作
+
+```python
+import requests
+r=requests.get(url)
+r=requests.post(url,data=data)
+```
+
+传递参数，定制响应头
+
+```python
+r=requests.get(url, headers=headers,params=params, cookies=cookies)
+```
+
+获取响应内容
+
+```
+r.text
+r.url
+r.status_code
+r.json()
+```
+
+## json操作
+
+通过json.dumps将字典转换成json
+通过json.loads将json转换成字典
+
+```python
+>>> import json
+>>> d=dict(name='bob', age=20)
+>>> json.dumps(d)
+'{"name": "bob", "age": 20}'
+>>> json_str='{"age":false, "key":null, "name":"bob" }'
+>>> json.loads(json_str)
+{'age': False, 'key': None, 'name': 'bob'}
+>>> a=json.loads(json_str) #获取字典里的内容办法
+>>> a.get('age')
+False
+```
+
+# numpy
+
+## dataframe基本操作
+
+### 新建
+
+pd.DataFrame
+
+```python
+import pandas as pd
+import numpy as np
+>>> d={'col1':['name1',2],'col2':['name2',4]}
+>>> df=pd.DataFrame(data=d)
+>>> df
+    col1   col2
+0  name1  name2
+1      2      4
+
+>>> df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+... columns=['a', 'b', 'c'])
+>>> df2
+   a  b  c
+0  1  2  3
+1  4  5  6
+2  7  8  9
+```
+
+###查看类型
+
+```python
+df.head(3) ##查看前三行
+df.tail(3) ##查看尾三行
+df.index 
+df.colunms
+df.dtype
+df.describe()
+```
+
+###转置,排列
+
+```
+df.sort_index(axis=0,ascending=False) # 通过行列标签来排列 axis∈{0，1}
+df.sort_value(by='columnname') #选择某一列进行排列
+df.T 转置
+```
+
+### 选择
+
+```python
+df['A'] #选择A 列
+df['a':'a'] #选择a行
+df[0：3] #选择前三行 
+```
+
+通过标签选择
+
+```python
+df.loc['a'] #选择a行
+df.loc['a','A'] #选择a行A列
+df.loc[:,'A'] #选择A列
+```
+
+通过数字定位
+
+```python
+df.iloc[1,2] #第一行，第2个
+```
+
+筛选数据
+
+```python
+df[df.A>0]  #选择 A列大于0的 行
+df[df.A>0, 'A'] #选择 A列大于0的 数 
+```
+
+### 操作数据
+
+```python
+df.mean(0) #计算平均值 0,1改变行列
+df.sub(s, axies='index') 
+df.apply(pd.to_numeric)
+df.apply(pd.to_numeric, errors='ignore')
+#更好的办法
+df.infer_objects()
+```
+
+### 分组
+
+```python
+df.groupby('A').sum()
+df.groupby(['A','B']).sum()
+```
+
