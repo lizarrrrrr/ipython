@@ -244,7 +244,7 @@ import numpy as np
 2  7  8  9
 ```
 
-###查看类型
+### 查看类型
 
 ```python
 df.head(3) ##查看前三行
@@ -255,7 +255,7 @@ df.dtype
 df.describe()
 ```
 
-###转置,排列
+### 转置,排列
 
 ```
 df.sort_index(axis=0,ascending=False) # 通过行列标签来排列 axis∈{0，1}
