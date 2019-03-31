@@ -289,7 +289,9 @@ df.iloc[1,2] #第一行，第2个
 
 ```python
 df[df.A>0]  #选择 A列大于0的 行
-df[df.A>0, 'A'] #选择 A列大于0的 数 
+df.loc[df.A>0, 'A'] #选择 A列大于0的 数
+df.loc[lambda df:df.A>0, :]
+df.loc[: lambda df: ['A','B']] #选择 A，B列
 ```
 
 ### 操作数据
