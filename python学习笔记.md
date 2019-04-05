@@ -312,3 +312,80 @@ df.groupby('A').sum()
 df.groupby(['A','B']).sum()
 ```
 
+## df.to_excel
+
+基本方式
+
+```python
+writer=pd.ExcelWriter('pandas_sample.xlsx', engine='openpyxl')
+df.to_excel(writer,sheet_name='sheet_name')
+writer.save()
+```
+
+追加数据
+
+```python
+from openpyxl import load_workbook
+excelpath='excel_path'
+with pd.ExcelWriter(excelpath, engine='openpyxl') as writer:
+    writer.book=load_workbook(excelpath)
+    df.to_excel(excel_writer=writer,sheet_name='sheet_name')
+    
+```
+
+使用openpyxl直接写入
+
+```python
+from openpyxl import load_workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
+excelpath='excel_path.xlsx'
+wb=load_workbook(excelpath) :
+ws=wb['sheetname']
+for r in dateframe_to_rows(df, index=True, header=True):
+    ws.append(r)
+wb.save(excelpath)
+
+```
+
+
+
+# openpyxl
+
+## 基本操作
+
+新建一个excel
+
+```python
+from openpyxl import Workbook
+wb=Workbook()
+ws=wb.active() #获取当前活动的sheet
+ws.title='sheet_name'
+for row in rows:
+    ws.append(sth)
+ws2=wb.create_sheet('sheet_name2')
+wb.save('filename')
+```
+
+
+
+载入一个excel
+
+```python
+from openpyxl import load_workbook
+excelpaht=sth
+wb=load_workbook(excelpath)
+ws=wb['sheet_name']
+wb.save(excelpath)
+```
+
+其他基本方法
+
+```python
+wb.creat_sheet(title=None, index=None)
+wb.remove_sheet(ws) #ws是worksheet对象，不是worksheet的名字
+wb['sheet'] #获取某个sheet
+wb.sheetnames #返回sheetname list
+ws['D18'].value #获取某个单元格的值
+```
+
+see more https://openpyxl.readthedocs.io
