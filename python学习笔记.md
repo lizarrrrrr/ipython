@@ -140,11 +140,92 @@ class Metaclass(type):
 class Metaclass(type):
     def __new__(cls, clsname, bases, attrs):
         #do sth
-        return super(Metaclass, cls).(cls, clsname, bases, attrs)
+        return super(Metaclass, cls).__new__(cls, clsname, bases, attrs)
        #super(子类，某个class的mro).父类的方法
 ```
 
+
+
+
+
+#	python多线程与进程
+
+## 多进程
+
+创建一个多进程
+
+```python
+from multiprocessing import Process
+import os
+
+def run_proc(name):
+    print(f'Run child process {name} ({os.getpid()})') #os.getpid()获取进程id
+if __name__ == '__main__':
+    p=Process(target=run_proc, args=('test',))
+    p.start()
+    p.join()
+```
+
+os.getppdid()获取父进程id
+
+通过os.fork（）创建最元基本的多进程，子进程返回0，父进程返回子进程id
+
+
+
+创建一个进程池
+
+```python
+from multiprocessing import Pool
+
+def s_task(name):
+    pass
+
+if __name__ == "__main__":
+    p=Pool(4)
+    for i in range(5):
+        p.apply_async(s_task, args(i,))
+    p.close()
+    p.join()
+
+```
+
+如果用超过进程数的任务，则在进程结束后才会进行
+
+## 多线程
+
+创建一个多线程
+
+```python
+import threading
+
+def loop():
+    pass
+
+t=threading.Thread(target=loop, name='sth') #name可以不写
+t.start()
+t.join() #等待子线程结束后哦再运行
+```
+
+多线程在改变全局变量时需要加锁!!!
+
+因为线程岁时可能被挂起，当对全局变量又加又减的时候可能产生不可预估的后果
+
+```python
+lock=threading.Lock()
+
+def run_thread:
+    lock.acquire()
+    try:
+        change_it(glolbal)
+    finally:
+        lock.release()
+```
+
+
+
 # python 虚拟环境
+
+
 
 ```shell
 $mkdir ~/.venvs
@@ -174,7 +255,13 @@ $(lpthw)
 
 # python 爬虫
 
+
+
 ## requests
+
+http://www.python-requests.org/en/master/
+
+
 
 基本操作
 
@@ -235,13 +322,24 @@ import numpy as np
 0  name1  name2
 1      2      4
 
->>> df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+>>> import pandas as pd
+>>> d={'one':[1,2,3]}
+>>> pd.DataFrame(d, index=['a','b','c'])
+   one
+a    1
+b    2
+c    3
+
+
+>>> df3 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
 ... columns=['a', 'b', 'c'])
 >>> df2
    a  b  c
 0  1  2  3
 1  4  5  6
 2  7  8  9
+
+
 ```
 
 ### 查看类型
@@ -311,6 +409,33 @@ df.infer_objects()
 df.groupby('A').sum()
 df.groupby(['A','B']).sum()
 ```
+
+### 合并
+
+```python
+left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]})
+right = pd.DataFrame({'key': ['foo', 'bar'], 'rval': [4, 5]})
+pd.merge(left,right,how='inner',on='key') # how可省略，inner表示交集
+```
+
+inner：交集
+outer :  并集
+left：左边的全集
+right：右边的全集
+
+
+
+还可以通过concat 横向竖向拼接
+
+```python
+pd.concat([df1,df2], axies=1, ,join='outer', keys=None) keys,join可省略
+```
+
+
+
+
+
+
 
 ## df.to_excel
 
